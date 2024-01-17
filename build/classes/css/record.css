@@ -1,0 +1,216 @@
+/* record 上層 */
+.record_topbar {
+	position: relative;
+	width: auto;
+	height: 10%;
+	padding-top: 40px;
+	padding-bottom: 40px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 錯誤訊息 */
+.text-danger {
+	position: absolute;
+	top: 66px;
+	left: 53%;
+	transform: translateX(-50%);
+	
+	font-size: 30px;
+}
+
+.date {
+	font-family: BungeeInline;
+	font-size: 30px;
+}
+
+.record_bottombar {
+	padding-top: 65px;
+}
+
+/* 收入 & 支出按鈕 */
+.expense {
+	font-family: BungeeInline;
+	color: white;
+	font-size: 20px;
+
+	padding: 10px 20px;
+	position: absolute;
+	left: 190px;
+	top: 40px;
+
+	background-color: #e70000;
+
+	border-radius: 50px;
+	border: 2px solid #2e2d2c;
+
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	cursor: pointer;
+}
+
+.income {
+	font-family: BungeeInline;
+	color: white;
+	font-size: 20px;
+
+	padding: 10px 20px;
+	position: absolute;
+	right: 160px;
+	top: 40px;
+
+	background-color: #2f762f;
+
+	border-radius: 50px;
+	border: 2px solid #2e2d2c;
+
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	cursor: pointer;
+}
+
+.income:hover,
+.expense:hover {
+	color: black;
+	background: white;
+	transform: scale(1.05);
+}
+
+.income:active,
+.expense:active {
+	transform: scale(0.95);
+}
+
+/* record 下層 */
+.name_block,
+.type_block,
+.type_block_2,
+.amount_block,
+.note_block,
+.account_block {
+	padding-top: 30px;
+	display: block;
+}
+
+.name_left,
+.name_bar,
+.type_left,
+.type_bar,
+.type_left_2,
+.type_bar_2,
+.amount_left,
+.amount_bar,
+.note_left,
+.note_bar,
+.account_left,
+.account_bar {
+	display: inline-block;
+}
+
+.name_left,
+.type_left,
+.type_left_2,
+.amount_left,
+.note_left,
+.account_left {
+	position: relative;
+	left: 195px;
+
+	font-family: BungeeInline;
+	font-size: 20px;
+}
+
+.name_bar,
+.type_bar,
+.type_bar_2,
+.amount_bar,
+.note_bar,
+.account_bar {
+	width: 55%;
+	position: relative;
+	left: 250px;
+}
+
+.name_bar_a,
+#type_dropdown,
+#type_dropdown_2,
+#account_dropdown,
+.amount_bar_a,
+.note_bar_a,
+.account_bar_a {
+	padding: 1px 2px 1px 20px;
+	width: 100%;
+
+	font-size: inherit;
+
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	background-color: #f8f9fa;
+
+	height: 33px;
+}
+
+.name_left {
+	padding-right: 50px;
+}
+
+.type_left,
+.type_left_2,
+.amount_left,
+.note_left,
+.account_left {
+	padding-right: 51px;
+}
+
+.amount_left {
+	padding-left: 29px;
+}
+
+.account_left {
+	padding-left: 22px;
+}
+
+.type_left,
+.type_left_2,
+.note_left {
+	padding-left: 64px;
+}
+
+.submit_block {
+	padding-top: 50px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.submit_button {
+	display: inline-block;
+	padding: 10px 20px;
+	font-size: 30px;
+	font-family: BungeeInline;
+
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+
+	background-color: #e67e22;
+	border: 1px solid #d35400;
+	border-radius: 50px;
+	/* 圓形按鈕 */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	cursor: pointer;
+}
+
+.submit_button:hover {
+	color: black;
+	background: white;
+	transform: scale(1.05);
+}
+
+.submit_button:active {
+	transform: scale(0.95);
+}

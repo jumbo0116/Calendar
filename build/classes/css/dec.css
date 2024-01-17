@@ -1,0 +1,225 @@
+body {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.calendar-inner{
+	padding-top: 20px !important;
+}
+
+/* 邊框 */
+.topbar,
+.board,
+.record,
+.form,
+.chart,
+.calendar {
+	border-width: 4px;
+	border-style: solid;
+	border-color: black;
+}
+
+.leftbar {
+	border-width: 0 4px 4px 4px;
+	border-style: solid;
+	border-color: black;
+}
+
+/* 頂端 */
+.topbar {
+	width: 100%;
+	height: 11vh;
+	background-color: #fd8d30;
+}
+
+.topbar_title {
+	font-family: BungeeInline;
+	font-size: 40px;
+	color: rgb(252, 248, 248);
+
+	position: relative;
+	left: 100px;
+	flex-direction: row;
+
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.topbar_statistics {
+	flex-direction: row;
+	position: absolute;
+	right: 100px;
+	height: 100px;
+	width: 300px;
+	display: inline-block;
+}
+
+/* 左邊Bar */
+.leftbar {
+	position: relative;
+	float: left;
+	left: 0px;
+	bottom: 0px;
+	width: 70px;
+	height: 90vh;
+	background-color: #ff67006b;
+}
+
+/* 左邊圖表 */
+.icon_home,
+.icon_dollar,
+.icon_form,
+.icon_setting,
+.icon_exit {
+	position: relative;
+	margin-bottom: 10px;
+	border-width: 0;
+
+	background-color: rgb(255, 255, 128, 0);
+
+	font-size: 50px;
+
+	display: flex;
+	justify-content: center;
+}
+
+.icon_home:hover,
+.icon_dollar:hover,
+.icon_form:hover,
+.icon_setting:hover,
+.icon_exit:hover {
+	color: white;
+}
+
+.icon_home {
+	top: 10px;
+}
+
+.icon_exit {
+	left: 4px;
+}
+
+/* 行事曆外層*/
+.outer {
+	position: relative;
+	display: inline-block;
+	height: 90vh;
+	width: 95.95%;
+	background-color: white;
+	padding: 25px;
+
+}
+
+/* 內層 */
+.board,
+.record,
+.form,
+.chart {
+	background-color: #fba368;
+	height: 100%;
+}
+
+.board {
+	padding: 10px 50px 70px 50px;
+}
+
+.topic{
+	display: flex;
+	position: relative;	
+	justify-content: center;
+	align-items: center;
+	
+	margin-bottom: 5px;
+}
+
+.dot{
+	width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    
+    margin:0 20px;
+}
+
+.dot_101{
+    background-color: #fd7808;
+}
+
+.dot_102{
+    background-color: #30bdfd;
+}
+
+.dot_103{
+    background-color: #30fd80;
+}
+
+.dot_104{
+    background-color: #f9f137;
+}
+
+.dot_105{
+    background-color: #e31717;
+}
+
+.dot_106{
+    background-color: #c642f3;
+}
+
+.dot_107{
+    background-color: #FFBDE7;
+}
+
+.dot_108{
+    background-color: #afa2a9;
+}
+
+.dot_word{
+	font-family: 思源黑體;	
+}
+
+/* board內層 */
+.calendar {
+	float: right;
+	position: relative;
+	width: auto;
+	height: 100%;
+}
+
+
+/* 日期框框樣式 */
+input {
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	background-color: #f8f9fa;
+}
+
+
+
+/* 配色調整 */
+.calendar-sidebar,
+#sidebarToggler,
+#eventListToggler {
+	background-color: #fd8d30 !important;
+}
+
+th[colspan="7"] {
+	color: #f1842a !important;
+}
+
+.calendar-sidebar>.month-list>.calendar-months>li.active-month {
+	background-color: #ff7400 !important;
+}
+
+.calendar-sidebar>.month-list>.calendar-months>li:hover {
+	background-color: #fba368 !important;
+}
+
+.event-list>.event-empty {
+	background-color: rgb(255 79 0 / 23%) !important;
+	border: 1px solid #ef610e !important;
+}
+
+.event-list>.event-empty>p {
+	color: #ef6703 !important;
+}
