@@ -35,7 +35,7 @@
 				<button class="month" onclick="dateSet(3); highlight(this)">3</button>
 				<button class="month" onclick="dateSet(4); highlight(this)">4</button>
 				<button class="month" onclick="dateSet(5); highlight(this)">5</button>
-				<button class="month" onclick="dateSet(6); highlight(this)">6</button>
+				<button class="month" onclick="dateSet(6); highlight(this)">6</button> 
 				<button class="month" onclick="dateSet(7); highlight(this)">7</button>
 				<button class="month" onclick="dateSet(8); highlight(this)">8</button>
 				<button class="month" onclick="dateSet(9); highlight(this)">9</button>
