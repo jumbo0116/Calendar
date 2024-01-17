@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,18 +26,22 @@ public class MoneyServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	// 取得登入者的 username
+    	HttpSession session = request.getSession();
+    	String username = (String)session.getAttribute("username");
+		
         int targetYear = Integer.parseInt(request.getParameter("year"));
         int targetMonth = Integer.parseInt(request.getParameter("month"));
         
-        int totalExpense = expense(targetYear, targetMonth);
-        int totalIncome = income(targetYear, targetMonth);
+        int totalExpense = expense(targetYear, targetMonth,username);
+        int totalIncome = income(targetYear, targetMonth,username);
         
         Map<String,Integer> result = new LinkedHashMap<>();
         result.put("totalExpense", totalExpense);
         result.put("totalIncome", totalIncome);
         
-        System.out.println("Total Expense: " + totalExpense);
-        System.out.println("Total Income: " + totalIncome);
+        //System.out.println("Total Expense: " + totalExpense);
+        //System.out.println("Total Income: " + totalIncome);
         
         ObjectMapper objectMapper = new ObjectMapper();
         
@@ -60,17 +65,18 @@ public class MoneyServlet extends HttpServlet{
 //        request.getRequestDispatcher("/calendar/Chart.jsp").forward(request, response);
 //    }
 	
-	public static int expense(int targetYear, int targetMonth){
+	public static int expense(int targetYear, int targetMonth,String username){
 		int totalExpense = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
             String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) THEN description ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
-                    "WHERE YEAR(date) = ? AND MONTH(date) = ?";
+                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, targetYear);
                 statement.setInt(2, targetMonth);
+                statement.setString(3, username);
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
@@ -85,18 +91,18 @@ public class MoneyServlet extends HttpServlet{
         return totalExpense;
     }
 	
-	public static int income(int targetYear, int targetMonth){
+	public static int income(int targetYear, int targetMonth,String username){
 		int totalIncome = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
             String sql = "SELECT SUM(CASE WHEN type IN (201, 202, 203, 204) THEN description ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
-                    "WHERE YEAR(date) = ? AND MONTH(date) = ?";
+                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, targetYear);
                 statement.setInt(2, targetMonth);
-
+                statement.setString(3, username);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                     	totalIncome = resultSet.getInt("total_amount");

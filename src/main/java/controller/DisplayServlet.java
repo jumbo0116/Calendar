@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.display.Display;
 import model.display.DisplayDaoMySQL;
@@ -17,12 +18,16 @@ import model.display.DisplayDaoMySQL;
 @WebServlet("/Display")
 public class DisplayServlet extends HttpServlet {
 	
+	private static DisplayDaoMySQL displayDao = new DisplayDaoMySQL();
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        DisplayDaoMySQL displayDao = new DisplayDaoMySQL();
-
-        List<Display> eventList = displayDao.data();
+    	// 取得登入者的 username
+    	HttpSession session = request.getSession();
+    	String username = (String)session.getAttribute("username");
+    	
+        List<Display> eventList = displayDao.data(username);
 
         String jsonEventList = DisplayDaoMySQL.convertListToJson(eventList);
 

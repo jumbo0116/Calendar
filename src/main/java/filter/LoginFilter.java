@@ -37,7 +37,7 @@ public class LoginFilter extends HttpFilter{
 		boolean isLogin = session.getAttribute("isLogin") == null 
 				? false: (boolean)session.getAttribute("isLogin");
 		if(!isLogin) {
-			response.sendRedirect("/Calendar/login.jsp");
+			response.sendRedirect("/Calendar/calendar/login.jsp");
 			return;
 		}
 		

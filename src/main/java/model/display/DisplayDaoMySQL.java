@@ -45,53 +45,53 @@ public class DisplayDaoMySQL {
 		}
 	}
 
-	public List<Display> data() {
+	public List<Display> data(String username) {
 		List<Display> display = new ArrayList<>();
 
 		try (Connection connection = JndiUtils.getConnection()) {
-			String sql = "SELECT Id, date, name, description, type FROM calendar.diary";
-			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					while (resultSet.next()) {
-						String Id = resultSet.getString("Id");
-						String date = resultSet.getString("date");
-						String name = resultSet.getString("name");
-						String type = resultSet.getString("type");
-						String description = "$"+"&nbsp"+resultSet.getString("description")+"&nbsp"+"元";
-						
-						if("101".equals(type)) {
-							String color = "#fd7808";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("102".equals(type)){
-							String color = "#30bdfd";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("103".equals(type)){
-							String color = "#30fd80";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("104".equals(type)){
-							String color = "#f9f137";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("105".equals(type)){
-							String color = "#e31717";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("106".equals(type)){
-							String color = "#c642f3";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("107".equals(type)){
-							String color = "#FFBDE7";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}else if("108".equals(type)){
-							String color = "#afa2a9";
-							Display datalist = new Display(Id, date, name, type, description,color);
-							display.add(datalist);
-						}
+			String sql = "SELECT Id, date, name, description, type FROM calendar.diary where Id=?";
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+				preparedStatement.setString(1, username);
+				ResultSet resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					String Id = resultSet.getString("Id");
+					String date = resultSet.getString("date");
+					String name = resultSet.getString("name");
+					String type = resultSet.getString("type");
+					String description = "$"+"&nbsp"+resultSet.getString("description")+"&nbsp"+"元";
+					
+					if("101".equals(type)) {
+						String color = "#fd7808";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("102".equals(type)){
+						String color = "#30bdfd";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("103".equals(type)){
+						String color = "#30fd80";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("104".equals(type)){
+						String color = "#f9f137";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("105".equals(type)){
+						String color = "#e31717";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("106".equals(type)){
+						String color = "#c642f3";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("107".equals(type)){
+						String color = "#FFBDE7";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
+					}else if("108".equals(type)){
+						String color = "#afa2a9";
+						Display datalist = new Display(Id, date, name, type, description,color);
+						display.add(datalist);
 					}
 				}
 			}

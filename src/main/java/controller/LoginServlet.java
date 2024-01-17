@@ -17,19 +17,19 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(value = "/login")
-public class LoginServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		String username = req.getParameter("username");
-		
+
 		String password = req.getParameter("password");
+
+		String dbPassowrd = getUserPassword(username);
 		
 		// 預設用戶：username=user,password=123($2a$10$OOxBDZsn455tNHFuwwZY4.lKk21m9wr4UxVKtsLWa9O6lU2M1ZNLa)
-		//boolean isPasswordMatch = BCrypt.checkpw(password, "$2a$10$OOxBDZsn455tNHFuwwZY4.lKk21m9wr4UxVKtsLWa9O6lU2M1ZNLa");
-		if(isUserCorrect(username,password)) {
-			
+		if (!"".equals(dbPassowrd) && BCrypt.checkpw(password,dbPassowrd)) {
 			// 設定 Http Session 資料
 			HttpSession session = req.getSession();
 			session.setAttribute("isLogin", true);
@@ -38,31 +38,29 @@ public class LoginServlet extends HttpServlet{
 			resp.sendRedirect("/Calendar/calendar/Home.jsp");
 			return;
 		}
-		
+
 		// 處理驗證沒有過的時候，要怎麼處理
 		req.setAttribute("error", "帳號或密碼輸入錯誤!");
 		RequestDispatcher rd = req.getRequestDispatcher("/calendar/login.jsp");
 		rd.forward(req, resp);
-		
+
 	}
-	
-	//確認帳號密碼正確
-	private boolean isUserCorrect(String username, String password) {
-		try (Connection connection = JndiUtils.getConnection()){
-			String sql = "SELECT * FROM calendar.accounts WHERE Id = ? And password = ?";
+
+	private String getUserPassword(String username) {
+		try (Connection connection = JndiUtils.getConnection()) {
+			String sql = "SELECT password FROM calendar.accounts WHERE Id = ?";
 			try (PreparedStatement statement = connection.prepareStatement(sql)) {
 				statement.setString(1, username);
-				statement.setString(2, password);
 				try (ResultSet resultSet = statement.executeQuery()) {
-					if(resultSet.next()) {
-						return true;
+					if (resultSet.next()) {
+						return resultSet.getString("password");
 					}
 				}
-			}								
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return "";
 		}
-		return false;
+		return "";
 	}
 }

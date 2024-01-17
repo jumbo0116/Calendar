@@ -1,4 +1,4 @@
-package filter;
+package test;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class BCryptExample {

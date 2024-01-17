@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Calendar/css/style.css">
+<link rel="stylesheet" href="/Calendar/css/dec.css">
+<link rel="stylesheet" href="/Calendar/css/evo-calendar.css">
+<link rel="stylesheet" href="/Calendar/css/charts.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css	">
+<link rel="stylesheet" href="/Calendar/css/style.css">
+
+
+<div class="topbar">
+	<!-- <div style="padding-top:0px;padding-left:0px;height:100px"> -->
+	<div class="topbar_title">Accounting Diary - ${ sessionScope.username }</div>
+</div>
+<div class="leftbar">
+	<button class="icon-home2 icon_home" title="主頁" onclick="window.location.href='/Calendar/calendar/Home.jsp'"></button>
+	<br>
+	<button class="icon-coin-dollar icon_dollar" title="記帳" onclick="window.location.href='/Calendar/calendar/Record.jsp'"></button>
+	<br>
+	<button class="icon-stats-dots icon_form" title="圖表" onclick="window.location.href='/Calendar/calendar/Chart.jsp'"></button>
+	<br>
+	<button class="icon-cog icon_setting" title="設定"></button>
+	<br>
+	<button class="icon-exit icon_exit" title="登出" onclick="window.location.href='/Calendar/calendar/login.jsp'"></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/Calendar/calendar/javascript/jquery-3.6.0.js"></script>
+<script src="/Calendar/calendar/javascript/evo-calendar.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

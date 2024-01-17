@@ -58,7 +58,8 @@ public class RegisterServlet extends HttpServlet {
 			} else {
 				Register register = new Register();
 				register.setId(username);
-				register.setPassword(password);
+				String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());  // 加密
+				register.setPassword(hashedPassword);
 
 				registerDao.create(register);
 				RequestDispatcher rd = req.getRequestDispatcher("/calendar/login.jsp");

@@ -3,7 +3,7 @@
 CREATE TABLE `accounts` (
   `num` int NOT NULL AUTO_INCREMENT,
   `Id` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(1000) NOT NULL,
   PRIMARY KEY (`num`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
