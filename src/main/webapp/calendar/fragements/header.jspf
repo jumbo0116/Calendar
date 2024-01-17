@@ -15,7 +15,9 @@
 
 <div class="topbar">
 	<!-- <div style="padding-top:0px;padding-left:0px;height:100px"> -->
-	<div class="topbar_title">Accounting Diary - ${ sessionScope.username }</div>
+	<div class="topbar_title">Accounting Diary</div>
+	<span class="icon-user-check icon_user_check"></span>
+	<div class="topbar_user">${ sessionScope.username }</div>
 </div>
 <div class="leftbar">
 	<button class="icon-home2 icon_home" title="主頁" onclick="window.location.href='/Calendar/calendar/Home.jsp'"></button>
