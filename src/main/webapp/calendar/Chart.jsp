@@ -128,6 +128,19 @@
 		}
 	});
 
+	<!-- 月份點擊反白 -->
+
+		function highlight(button) {
+			  const buttons = document.querySelectorAll('.month');
+			  buttons.forEach(btn => {
+			    btn.classList.remove('highlighted');
+			  });
+		
+			  // 将點擊的按钮添加高亮类
+			  button.classList.add('highlighted');
+			  console.log('Highlight function called with button:', button);
+			}
+
 
 	<!-- icon點擊反白 -->
 	function highlightbar(button) {
