@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * http://localhost:8080/Calendar/Money?year=2024&month=1
+ */
 @WebServlet("/Money")
 public class MoneyServlet extends HttpServlet{
 
@@ -23,13 +30,35 @@ public class MoneyServlet extends HttpServlet{
         
         int totalExpense = expense(targetYear, targetMonth);
         int totalIncome = income(targetYear, targetMonth);
+        
+        Map<String,Integer> result = new LinkedHashMap<>();
+        result.put("totalExpense", totalExpense);
+        result.put("totalIncome", totalIncome);
+        
         System.out.println("Total Expense: " + totalExpense);
         System.out.println("Total Income: " + totalIncome);
         
-        request.setAttribute("totalIncome", totalIncome);
-        request.setAttribute("totalExpense", totalExpense);
-        request.getRequestDispatcher("/Calendar/calendar/Chart.jsp").forward(request, response);
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        String jsonData = objectMapper.writeValueAsString(result);
+        response.getWriter().write(jsonData);
     }
+//	
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//
+//        int targetYear = Integer.parseInt(request.getParameter("year"));
+//        int targetMonth = Integer.parseInt(request.getParameter("month"));
+//        
+//        int totalExpense = expense(targetYear, targetMonth);
+//        int totalIncome = income(targetYear, targetMonth);
+//        System.out.println("Total Expense: " + totalExpense);
+//        System.out.println("Total Income: " + totalIncome);
+//        
+//        request.setAttribute("totalIncome", totalIncome);
+//        request.setAttribute("totalExpense", totalExpense);
+//        request.getRequestDispatcher("/calendar/Chart.jsp").forward(request, response);
+//    }
 	
 	public static int expense(int targetYear, int targetMonth){
 		int totalExpense = 0;

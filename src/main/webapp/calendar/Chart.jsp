@@ -4,6 +4,8 @@
 <%@ page import="controller.MoneyServlet" %>
 <%
 String error = (String) request.getAttribute("error");
+Integer totalIncome = (Integer) request.getAttribute("totalIncome");
+Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 %>
 <!DOCTYPE html>
 <html>
@@ -110,10 +112,8 @@ String error = (String) request.getAttribute("error");
 						onclick=" highlightbar(this)"></button>
 				</div>
 				<div class="bottombar_right">
-					<h1>Total Income: ${totalIncome}</h1>
-					<h1>Total Expense: ${totalExpense}</h1>
-					<%="Debug - Total Income: " + request.getAttribute("totalIncome")%>
-					<%="Debug - Total Expense: " + request.getAttribute("totalExpense")%>
+					<h1>Total Income: <span id="totalIncome">${totalIncome}</span> </h1>
+					<h1>Total Expense: <span id="totalExpense">${totalExpense}</span></h1>
 				</div>
 			</div>
 		</div>
@@ -226,36 +226,8 @@ String error = (String) request.getAttribute("error");
 
 	function dateSet(month) {
 		updateDate(currentYear, month);
-
-		dataToSend = {
-			year : currentYear,
-			month : month
-		};
-
-		$.ajax({
-			type : "POST",
-			url : "/Calendar/Chart",
-			data : dataToSend,
-			success : function(data) {
-				console.log("Data sent successfully:", data);
-				updateCharts(data);
-			},
-			error : function(error) {
-				console.error("Error sending data:", error);
-			}
-		});
-		
-		$.ajax({
-			type : "POST",
-			url : "/Calendar/Money",
-			data : dataToSend,
-			success : function(data) {
-				console.log("Data sent successfully:", data);
-			},
-			error : function(error) {
-				console.error("Error sending data:", error);
-			}
-		});
+		fetchChart(currentYear,month);
+		fetchMoney(currentYear,month);
 	}
 </script>
 
@@ -273,6 +245,12 @@ function fetchData() {
     var targetYear = 2024; // 設定初始年份
     var targetMonth = 1; // 設定初始月份
 
+    fetchChart(targetYear,targetMonth);
+    
+    fetchMoney(targetYear,targetMonth);
+}
+
+function fetchChart(targetYear,targetMonth) {
     $.ajax({
         type: "POST",
         url: "/Calendar/Chart",
@@ -285,6 +263,28 @@ function fetchData() {
             console.error("Error fetching data:", error);
         }
     });
+}
+
+function fetchMoney(targetYear,targetMonth) {
+	$.ajax({
+		type : "POST",
+		url : "/Calendar/Money",
+		dataType: 'json',
+		data : {
+			year: targetYear,
+			month: targetMonth
+		},
+		success : function(data) {
+			console.log("Data sent successfully:", data);
+			console.log("Data sent successfully:", data.totalIncome);
+			console.log("Data sent successfully:", data.totalExpense);
+			$('#totalIncome').text(data.totalIncome);
+			$('#totalExpense').text(data.totalExpense);
+		},
+		error : function(error) {
+			console.error("Error sending data:", error);
+		}
+	});
 }
 
 function updateCharts(chartData) {

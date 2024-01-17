@@ -24,8 +24,7 @@ String error = (String) request.getAttribute("error");
 </head>
 <body>
 	<div class="d-flex justify-content-center align-items-center vh-100">
-		<form class="needs-validation" novalidate method="post"
-			action="/Calendar/Register">
+		<form class="needs-validation" novalidate method="post" action="/Calendar/Register">
 			<h4 class="text-center">註冊帳號</h4>
 			<%
 			if (error != null) {
