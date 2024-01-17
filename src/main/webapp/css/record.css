@@ -4,7 +4,7 @@
 	width: auto;
 	height: 10%;
 	padding-top: 40px;
-	padding-bottom: 40px;
+	padding-bottom: 5%;
 
 	display: flex;
 	justify-content: center;
@@ -39,7 +39,6 @@
 	padding: 10px 20px;
 	position: absolute;
 	left: 190px;
-	top: 40px;
 
 	background-color: #e70000;
 
@@ -59,7 +58,6 @@
 	padding: 10px 20px;
 	position: absolute;
 	right: 160px;
-	top: 40px;
 
 	background-color: #2f762f;
 

@@ -140,7 +140,7 @@
 
 /* chart 下層 */
 .bottombar_left{
-	width: 100%;
+	width: 70%;
 	
 	position: relative;
 	top: 50px;
@@ -161,10 +161,41 @@
 
 .icon_pie{
 	position: absolute;
-	left: 250px;
+	left: 8%;
 }
 
 .icon_bar{
 	position: absolute;
-	right: 250px;
+	right: 8%;
+}
+/* 金額顯示層 */
+.income_show{
+	font-family: BungeeInline;
+	color: #23f566;
+
+	position: relative;
+	top:30%;
+}
+
+.expense_show{
+	font-family: BungeeInline;
+	color: #fb2f2fe8;
+	
+	position: relative;
+	top:45%;
+}
+
+.income_show_int,
+.expense_show_int{
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.income_show_int{
+	color: #23f566;
+}
+
+.expense_show_int{
+	color: #fb2f2fe8;
 }

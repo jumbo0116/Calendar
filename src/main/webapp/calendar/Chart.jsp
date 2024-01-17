@@ -15,10 +15,7 @@
 
 <div class="outer">
 	<div class="chart">
-		<div class="chart_topbar">
-			<div class="chart_topbar_left">
-				<button class="icon-loop2 icon_switch"></button>
-			</div>
+		<div class="chart_topbar">			
 			<div class="chart_topbar_right" id="chart_topbar_right">
 				<div class="date date_left">
 					From:&nbsp&nbsp<input type="text" id="datepicker"
@@ -59,8 +56,8 @@
 					onclick=" highlightbar(this)"></button>
 			</div>
 			<div class="bottombar_right">
-				<h1>Total Income: <span id="totalIncome">${totalIncome}</span> </h1>
-				<h1>Total Expense: <span id="totalExpense">${totalExpense}</span></h1>
+				<h1 class="income_show">Total &nbsp&nbspIncome&nbsp: <br><span id="totalIncome" class="income_show_int">${totalIncome}</span> </h1>
+				<h1 class="expense_show">Total Expense&nbsp:<br> <span id="totalExpense" class="expense_show_int">${totalExpense}</span></h1>
 			</div>
 		</div>
 	</div>
@@ -84,8 +81,8 @@
 	});
 	<!-- 日期選擇&月份選擇切換 -->
 	$(function() {
-		$('.chart_topbar_right2').hide();
-		$('.chart_topbar_right').show();
+		$('.chart_topbar_right').hide();
+		$('.chart_topbar_right2').show();
 	
 		$('.icon_switch').on('click', function() {
 			if ($('.chart_topbar_right').is(':hidden')) {
