@@ -75,8 +75,10 @@ public class ChartServlet extends HttpServlet {
 		for (Chart chart : charts) {
 			String type = chart.getType();
 			String description = chart.getDescription();
-			int index = Integer.parseInt(type.substring(type.length() - 1));
-			chartValues[index-1] = Double.valueOf(description);
+			if (type.startsWith("1")) {
+				int index = Integer.parseInt(type.substring(type.length() - 1));
+				chartValues[index-1] = Double.valueOf(description);
+			}
 		}
 		
 		//System.out.println(Arrays.asList(chartValues));
