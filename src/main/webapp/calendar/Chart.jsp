@@ -46,7 +46,7 @@
 		</div>
 		<div class="chart_bottombar">
 			<div class="bottombar_left">
-				<button class="icon-pie-chart icon_pie icon_highlight"
+				<button class="icon-pie-chart icon_pie icon_highlight highlightedbar"
 					onclick=" highlightbar(this)"></button>
 				<div>
 					<canvas id="myChart" class="pieChart"></canvas>
@@ -153,6 +153,8 @@
 		  button.classList.add('highlightedbar');
 		  console.log('Highlight function called with button:', button);
 	}
+	
+	
 
 	<!-- 月份選擇 -->
 	var dataToSend; // 声明dataToSend变量
@@ -164,7 +166,14 @@
 	function dateSet(month) {
 		updateDate(currentYear, month);
 		fetchChart(currentYear,month);
-		fetchMoney(currentYear,month);
+		fetchMoney(currentYear,month);		
+		
+		// 移除 icon_bar 的反白狀態
+	    const iconBar = document.querySelector('.icon_bar');
+	    iconBar.classList.remove('highlightedbar');
+		 // 增加 icon_pie 的反白狀態
+	    const iconPie = document.querySelector('.icon_pie');
+	    iconPie.classList.add('highlightedbar');
 	}
 
 	<!-- 統計圖表 -->
