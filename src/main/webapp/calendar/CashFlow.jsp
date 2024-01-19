@@ -31,7 +31,7 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 				<button class="icon-circle-up icon_up" onclick="increment()"></button>
 				<div class="year" id="number" onclick="dateSet(2024, 0)">2024</div>
 				<button class="icon-circle-down icon_down" onclick="decrement()"></button>
-				<button class="month" onclick="dateSet(1); highlight(this)">1</button>
+				<button class="month highlighted" onclick="dateSet(1); highlight(this)">1</button>
 				<button class="month" onclick="dateSet(2); highlight(this)">2</button>
 				<button class="month" onclick="dateSet(3); highlight(this)">3</button>
 				<button class="month" onclick="dateSet(4); highlight(this)">4</button>
@@ -55,7 +55,7 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 						<h1 class="cash_income word">income&nbsp:</h1>
 						<h1 class="cash_income_show">XXX</h1>						
 						<h1 class="cash_expense word">expense&nbsp:</h1>						
-						<h1 class="cash_expense_show">XXX</h1>
+						<h1><span id="cashExpense" class="cash_expense_show">${cashExpense}</span></h1>
 					</div>
 			</div>
 			<div class="mid_outer">
@@ -70,7 +70,7 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 						</div>
 						<div>					
 							<h1 class="mid_expense word">expense&nbsp:</h1>
-							<h1 class="mid_expense_show">XXX</h1>
+							<h1 id="bankExpense" class="mid_expense_show">${bankExpense}</h1>
 						</div>
 					</div>
 			</div>
@@ -80,10 +80,8 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 					<div class="word_card">Credit Card</div>
 				</div>
 					<div class="card_wrapper">
-						<h1 class="card_income word">income&nbsp:</h1>
-						<h1 class="card_income_show">XXX</h1>
 						<h1 class="card_expense word">expense&nbsp:</h1>
-						<h1 class="card_expense_show">XXX</h1>
+						<h1  id="cardExpense" class="card_expense_show">${cardExpense}</h1>
 					</div>
 			</div>
 		</div>
@@ -167,23 +165,13 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 			  button.classList.add('highlighted');
 			  console.log('Highlight function called with button:', button);
 			}
-
-
-	<!-- icon點擊反白 -->
-	function highlightbar(button) {
-		  const buttons = document.querySelectorAll('.icon_highlight');
-		  buttons.forEach(btn => {
-		    btn.classList.remove('highlightedbar');
-		  });
-	
-		  // 将點擊的按钮添加高亮类
-		  button.classList.add('highlightedbar');
-		  console.log('Highlight function called with button:', button);
-	}
-	
 	
 
 	<!-- 月份選擇 -->
+	$(document).ready(function () {
+	    fetchData();	    
+	});
+	
 	var dataToSend; // 声明dataToSend变量
 	
 	function updateDate(year, month) {
@@ -192,50 +180,20 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 	
 	function dateSet(month) {
 		updateDate(currentYear, month);
-		fetchChart(currentYear,month);
 		fetchMoney(currentYear,month);		
-		
-		// 移除 icon_bar 的反白狀態
-	    const iconBar = document.querySelector('.icon_bar');
-	    iconBar.classList.remove('highlightedbar');
-		 // 增加 icon_pie 的反白狀態
-	    const iconPie = document.querySelector('.icon_pie');
-	    iconPie.classList.add('highlightedbar');
 	}
-
-	<!-- 統計圖表 -->
-	$(document).ready(function () {
-	    // 調用 fetchData 函數，初始化圖表
-	    fetchData();
-	});
 	
 	function fetchData() {
 	    var targetYear = 2024; // 設定初始年份
 	    var targetMonth = 1; // 設定初始月份
-	    fetchChart(targetYear,targetMonth);
 	    fetchMoney(targetYear,targetMonth);
 	}
-	
-	function fetchChart(targetYear,targetMonth) {
-	    $.ajax({
-	        type: "POST",
-	        url: "/Calendar/Chart",
-	        data: { year: targetYear, month: targetMonth },
-	        success: function (data) {
-	        	console.log(data);
-	        	// 使用返回的 JSON 數據初始化圖表
-	            updateCharts(data);
-	        },
-	        error: function (error) {
-	            console.error("Error fetching data:", error);
-	        }
-	    });
-	}
+		
 	
 	function fetchMoney(targetYear,targetMonth) {
 		$.ajax({
 			type : "POST",
-			url : "/Calendar/Money",
+			url : "/Calendar/CashFlow",
 			dataType: 'json',
 			data : {
 				year: targetYear,
@@ -243,106 +201,16 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 			},
 			success : function(data) {
 				console.log("Data sent successfully:", data);
-				console.log("Data sent successfully:", data.totalIncome);
-				console.log("Data sent successfully:", data.totalExpense);
-				$('#totalIncome').text(data.totalIncome);
-				$('#totalExpense').text(data.totalExpense);
+				console.log("Data sent successfully:", data.cashExpense);
+				console.log("Data sent successfully:", data.cardExpense);
+				console.log("Data sent successfully:", data.bankExpense);
+				$('#cashExpense').text(data.cashExpense);
+				$('#cardExpense').text(data.cardExpense);
+				$('#bankExpense').text(data.bankExpense);
 			},
 			error : function(error) {
 				console.error("Error sending data:", error);
 			}
 		});
-	}
-	
-	function updateCharts(chartData) {
-		
-		console.log(chartData);
-		
-		// 提取 datasets 配置
-	    const datasetsConfig = {
-	        labels: ['飲食', '交通', '娛樂', '日常用品', '醫療保健', '服飾', '稅金', '其他'],
-	        datasets: [{
-	            label: '',
-	            data: chartData,
-	            backgroundColor: [
-	                '#30fd9c',
-	                '#ff4a4a',
-	                '#00f5e7',
-	                '#fff400',
-	                '#8e00ff',
-	                '#ff7ddf',
-	                '#ffffff',
-	                '#f9c497'
-	            ],
-	            borderWidth: 1
-	        }]
-	    };
-	
-	    // 更新圓餅圖
-	    const pieChartCanvas = document.getElementById('myChart');
-	    if (pieChartCanvas) {
-	        const existingChart = Chart.getChart(pieChartCanvas);
-	        if (existingChart) {
-	            existingChart.destroy();
-	        }
-	
-	        new Chart(pieChartCanvas, {
-	            type: 'pie',
-	            data: datasetsConfig,
-	            options: {
-	                scales: {
-	                    y: {
-	                        beginAtZero: true
-	                    }
-	                }
-	            }
-	        });
-	    }
-	
-	    // 更新長條圖
-	    const barChartCanvas = document.getElementById('myChart2');
-		    if (barChartCanvas) {
-		        const existingChart = Chart.getChart(barChartCanvas);
-		        if (existingChart) {
-		            existingChart.destroy();
-		        }
-		
-		    	 // 將 backgroundColor 設置為單一的白色值
-		        const barChartConfig = {
-		            labels: ['飲食', '交通', '娛樂', '日常用品', '醫療保健', '服飾', '稅金', '其他'],
-		            datasets: [{
-		                label: '金流',
-		                data: chartData,
-		                backgroundColor: '#5ab5ff',  
-		                borderWidth: 1
-		            }]
-		        };
-		        
-		        new Chart(barChartCanvas, {
-		            type: 'bar',
-		            data: barChartConfig,
-		            options: {
-		                scales: {
-		                    y: {
-		                        beginAtZero: true
-		                    }
-		                }
-		            }
-		        });
-		    }
-	}
-	
-	$(function() {
-		$('.barChart').hide();
-		$('.pieChart').show();
-	
-		$('.icon_pie').on('click', function() {			
-				$('.barChart').hide();
-				$('.pieChart').show();
-		});
-		$('.icon_bar').on('click', function() {			
-			$('.pieChart').hide();
-			$('.barChart').show();
-		});
-	});
+	}	
 </script>

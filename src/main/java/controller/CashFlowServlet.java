@@ -17,12 +17,9 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * http://localhost:8080/Calendar/Money?year=2024&month=1
- */
-@WebServlet("/Money")
-public class MoneyServlet extends HttpServlet{
-
+@WebServlet("/CashFlow")
+public class CashFlowServlet extends HttpServlet{
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -33,43 +30,31 @@ public class MoneyServlet extends HttpServlet{
         int targetYear = Integer.parseInt(request.getParameter("year"));
         int targetMonth = Integer.parseInt(request.getParameter("month"));
         
-        int totalExpense = expense(targetYear, targetMonth,username);
-        int totalIncome = income(targetYear, targetMonth,username);
+        int cashExpense = cashexpense(targetYear, targetMonth,username);
+        int bankExpense = bankexpense(targetYear, targetMonth,username);
+        int cardExpense = cardexpense(targetYear, targetMonth,username);
+
         
         Map<String,Integer> result = new LinkedHashMap<>();
-        result.put("totalExpense", totalExpense);
-        result.put("totalIncome", totalIncome);
-        
-        System.out.println("Total Expense: " + totalExpense);
-        System.out.println("Total Income: " + totalIncome);
+        result.put("cashExpense", cashExpense);
+        result.put("bankExpense", bankExpense);
+        result.put("cardExpense", cardExpense);
+
+        System.out.println("cashExpense: " + cashExpense);
+        System.out.println("bankExpense: " + bankExpense);
+        System.out.println("cardExpense: " + cardExpense);
         
         ObjectMapper objectMapper = new ObjectMapper();
         
         String jsonData = objectMapper.writeValueAsString(result);
         response.getWriter().write(jsonData);
     }
-//	
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        int targetYear = Integer.parseInt(request.getParameter("year"));
-//        int targetMonth = Integer.parseInt(request.getParameter("month"));
-//        
-//        int totalExpense = expense(targetYear, targetMonth);
-//        int totalIncome = income(targetYear, targetMonth);
-//        System.out.println("Total Expense: " + totalExpense);
-//        System.out.println("Total Income: " + totalIncome);
-//        
-//        request.setAttribute("totalIncome", totalIncome);
-//        request.setAttribute("totalExpense", totalExpense);
-//        request.getRequestDispatcher("/calendar/Chart.jsp").forward(request, response);
-//    }
 	
-	public static int expense(int targetYear, int targetMonth,String username){
-		int totalExpense = 0;
+	public static int cashexpense(int targetYear, int targetMonth,String username){
+		int cashExpense = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
-            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) THEN description ELSE 0 END) AS total_amount " +
+            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '1' THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
                     "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
 
@@ -80,7 +65,7 @@ public class MoneyServlet extends HttpServlet{
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        totalExpense = resultSet.getInt("total_amount");
+                        cashExpense = resultSet.getInt("total_amount");
                     }
                 }
             }
@@ -88,14 +73,14 @@ public class MoneyServlet extends HttpServlet{
             e.printStackTrace();
         }
 
-        return totalExpense;
+        return cashExpense;
     }
 	
-	public static int income(int targetYear, int targetMonth,String username){
-		int totalIncome = 0;
+	public static int cardexpense(int targetYear, int targetMonth,String username){
+		int cardExpense = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
-            String sql = "SELECT SUM(CASE WHEN type IN (201, 202, 203, 204) THEN description ELSE 0 END) AS total_amount " +
+            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '2'　THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
                     "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
 
@@ -103,9 +88,10 @@ public class MoneyServlet extends HttpServlet{
                 statement.setInt(1, targetYear);
                 statement.setInt(2, targetMonth);
                 statement.setString(3, username);
+
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                    	totalIncome = resultSet.getInt("total_amount");
+                    	cardExpense = resultSet.getInt("total_amount");
                     }
                 }
             }
@@ -113,7 +99,32 @@ public class MoneyServlet extends HttpServlet{
             e.printStackTrace();
         }
 
-        return totalIncome;
+        return cardExpense;
     }
 	
+	public static int bankexpense(int targetYear, int targetMonth,String username){
+		int bankExpense = 0;
+		
+		try (Connection connection = JndiUtils.getConnection()) {
+            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '3'　THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
+                    "FROM calendar.diary " +
+                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, targetYear);
+                statement.setInt(2, targetMonth);
+                statement.setString(3, username);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        bankExpense = resultSet.getInt("total_amount");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bankExpense;
+    }
 }

@@ -30,7 +30,7 @@
 				<button class="icon-circle-up icon_up" onclick="increment()"></button>
 				<div class="year" id="number" onclick="dateSet(2024, 0)">2024</div>
 				<button class="icon-circle-down icon_down" onclick="decrement()"></button>
-				<button class="month" onclick="dateSet(1); highlight(this)">1</button>
+				<button class="month highlighted" onclick="dateSet(1); highlight(this)">1</button>
 				<button class="month" onclick="dateSet(2); highlight(this)">2</button>
 				<button class="month" onclick="dateSet(3); highlight(this)">3</button>
 				<button class="month" onclick="dateSet(4); highlight(this)">4</button>
