@@ -86,6 +86,11 @@
 	font-size: 35px;
 }
 
+.show{
+	font-family: BungeeInline;
+	color: white;
+}
+
 .cash_income,
 .mid_income{
 	color: #23f566;

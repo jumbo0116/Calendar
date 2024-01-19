@@ -53,9 +53,9 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 				</div>
 					<div class="cash_wrapper">
 						<h1 class="cash_income word">income&nbsp:</h1>
-						<h1 class="cash_income_show">XXX</h1>						
+						<h1 id="cashIncome" class="cash_income_show show">${cashIncome}</h1>						
 						<h1 class="cash_expense word">expense&nbsp:</h1>						
-						<h1><span id="cashExpense" class="cash_expense_show">${cashExpense}</span></h1>
+						<h1 id="cashExpense" class="cash_expense_show show">${cashExpense}</h1>
 					</div>
 			</div>
 			<div class="mid_outer">
@@ -66,11 +66,9 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 					<div class="mid_wrapper">
 						<div>
 							<h1 class="mid_income word">income&nbsp:</h1>
-							<h1 class="mid_income_show">XXX</h1>
-						</div>
-						<div>					
+							<h1 id="bankIncome" class="mid_income_show show">${bankIncome}</h1>					
 							<h1 class="mid_expense word">expense&nbsp:</h1>
-							<h1 id="bankExpense" class="mid_expense_show">${bankExpense}</h1>
+							<h1 id="bankExpense" class="mid_expense_show show">${bankExpense}</h1>
 						</div>
 					</div>
 			</div>
@@ -81,7 +79,7 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 				</div>
 					<div class="card_wrapper">
 						<h1 class="card_expense word">expense&nbsp:</h1>
-						<h1  id="cardExpense" class="card_expense_show">${cardExpense}</h1>
+						<h1  id="cardExpense" class="card_expense_show show">${cardExpense}</h1>
 					</div>
 			</div>
 		</div>
@@ -204,9 +202,13 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 				console.log("Data sent successfully:", data.cashExpense);
 				console.log("Data sent successfully:", data.cardExpense);
 				console.log("Data sent successfully:", data.bankExpense);
+				console.log("Data sent successfully:", data.cashIncome);
+				console.log("Data sent successfully:", data.bankIncome);
 				$('#cashExpense').text(data.cashExpense);
 				$('#cardExpense').text(data.cardExpense);
 				$('#bankExpense').text(data.bankExpense);
+				$('#cashIncome').text(data.cashIncome);
+				$('#bankIncome').text(data.bankIncome);
 			},
 			error : function(error) {
 				console.error("Error sending data:", error);

@@ -30,19 +30,25 @@ public class CashFlowServlet extends HttpServlet{
         int targetYear = Integer.parseInt(request.getParameter("year"));
         int targetMonth = Integer.parseInt(request.getParameter("month"));
         
-        int cashExpense = cashexpense(targetYear, targetMonth,username);
-        int bankExpense = bankexpense(targetYear, targetMonth,username);
-        int cardExpense = cardexpense(targetYear, targetMonth,username);
-
+        int cashExpense = expense(targetYear, targetMonth,username,1);
+        int cardExpense = expense(targetYear, targetMonth,username,2);
+        int bankExpense = expense(targetYear, targetMonth,username,3);
+        
+        int cashIncome = income(targetYear, targetMonth,username,1);
+        int bankIncome = income(targetYear, targetMonth,username,2);
         
         Map<String,Integer> result = new LinkedHashMap<>();
         result.put("cashExpense", cashExpense);
         result.put("bankExpense", bankExpense);
-        result.put("cardExpense", cardExpense);
+        result.put("cardExpense", cardExpense);        
+        result.put("cashIncome", cashIncome);
+        result.put("bankIncome", bankIncome);
 
         System.out.println("cashExpense: " + cashExpense);
         System.out.println("bankExpense: " + bankExpense);
-        System.out.println("cardExpense: " + cardExpense);
+        System.out.println("cardExpense: " + cardExpense);       
+        System.out.println("cashIncome: " + cashIncome);
+        System.out.println("bankIncome: " + bankIncome);
         
         ObjectMapper objectMapper = new ObjectMapper();
         
@@ -50,22 +56,23 @@ public class CashFlowServlet extends HttpServlet{
         response.getWriter().write(jsonData);
     }
 	
-	public static int cashexpense(int targetYear, int targetMonth,String username){
-		int cashExpense = 0;
+	public static int expense(int targetYear, int targetMonth,String username,int accountType){
+		int expense = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
-            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '1' THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
+            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
-                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
+                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=? AND account=?";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, targetYear);
                 statement.setInt(2, targetMonth);
                 statement.setString(3, username);
+                statement.setInt(4, accountType);
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        cashExpense = resultSet.getInt("total_amount");
+                        expense = resultSet.getInt("total_amount");
                     }
                 }
             }
@@ -73,25 +80,26 @@ public class CashFlowServlet extends HttpServlet{
             e.printStackTrace();
         }
 
-        return cashExpense;
+        return expense;
     }
 	
-	public static int cardexpense(int targetYear, int targetMonth,String username){
-		int cardExpense = 0;
+	public static int income(int targetYear, int targetMonth,String username,int accountType){
+		int income = 0;
 		
 		try (Connection connection = JndiUtils.getConnection()) {
-            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '2'　THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
+            String sql = "SELECT SUM(CASE WHEN type IN (201, 202, 203, 204) THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
                     "FROM calendar.diary " +
-                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
+                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=? AND account=?";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, targetYear);
                 statement.setInt(2, targetMonth);
                 statement.setString(3, username);
+                statement.setInt(4, accountType);
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                    	cardExpense = resultSet.getInt("total_amount");
+                    	income = resultSet.getInt("total_amount");
                     }
                 }
             }
@@ -99,32 +107,7 @@ public class CashFlowServlet extends HttpServlet{
             e.printStackTrace();
         }
 
-        return cardExpense;
+        return income;
     }
 	
-	public static int bankexpense(int targetYear, int targetMonth,String username){
-		int bankExpense = 0;
-		
-		try (Connection connection = JndiUtils.getConnection()) {
-            String sql = "SELECT SUM(CASE WHEN type IN (101, 102, 103, 104, 105, 106, 107, 108) AND account = '3'　THEN CAST(description AS SIGNED) ELSE 0 END) AS total_amount " +
-                    "FROM calendar.diary " +
-                    "WHERE YEAR(date) = ? AND MONTH(date) = ? AND Id=?";
-
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, targetYear);
-                statement.setInt(2, targetMonth);
-                statement.setString(3, username);
-
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        bankExpense = resultSet.getInt("total_amount");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return bankExpense;
-    }
 }
