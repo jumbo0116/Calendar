@@ -1,0 +1,16 @@
+/* icon */
+.icon_cash,
+.icon_bank,
+.icon_card{
+	position: relative;
+	margin-bottom: 10px;
+
+	border-width: 0;
+
+	background-color: rgb(255, 255, 128, 0);
+
+	font-size: 50px;
+
+	display: flex;
+	justify-content: center;
+}

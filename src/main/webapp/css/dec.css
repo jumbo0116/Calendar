@@ -99,7 +99,6 @@ body {
 .icon_home,
 .icon_dollar,
 .icon_form,
-.icon_setting,
 .icon_exit {
 	position: relative;
 	margin-bottom: 10px;
@@ -113,10 +112,23 @@ body {
 	justify-content: center;
 }
 
+.icon_pencil {
+	position: relative;
+	margin-bottom: 10px;
+	border-width: 0;
+
+	background-color: rgb(255, 255, 128, 0);
+
+	font-size: 45px;
+
+	display: flex;
+	justify-content: center;
+}
+
 .icon_home:hover,
 .icon_dollar:hover,
 .icon_form:hover,
-.icon_setting:hover,
+.icon_pencil:hover,
 .icon_exit:hover {
 	color: white;
 }

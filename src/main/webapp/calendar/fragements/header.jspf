@@ -22,11 +22,11 @@
 <div class="leftbar">
 	<button class="icon-home2 icon_home" title="主頁" onclick="window.location.href='/Calendar/calendar/Home.jsp'"></button>
 	<br>
-	<button class="icon-coin-dollar icon_dollar" title="記帳" onclick="window.location.href='/Calendar/calendar/Record.jsp'"></button>
+	<button class="icon-pencil icon_pencil" title="記帳" onclick="window.location.href='/Calendar/calendar/Record.jsp'"></button>
 	<br>
 	<button class="icon-stats-dots icon_form" title="圖表" onclick="window.location.href='/Calendar/calendar/Chart.jsp'"></button>
 	<br>
-	<button class="icon-cog icon_setting" title="設定"></button>
+	<button class="icon-coin-dollar icon_dollar" title="設定" onclick="window.location.href='/Calendar/calendar/CashFlow.jsp'"></button>
 	<br>
 	<button class="icon-exit icon_exit" title="登出" onclick="window.location.href='/Calendar/calendar/login.jsp'"></button>
 </div>
