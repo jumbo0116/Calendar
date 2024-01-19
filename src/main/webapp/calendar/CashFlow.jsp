@@ -1,30 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <link rel="stylesheet" href="/Calendar/css/chart.css">
 <link rel="stylesheet" href="/Calendar/css/CashFlow.css">
 
-<%@ include file="/calendar/fragements/header.jspf" %>
+<%@ include file="/calendar/fragements/header.jspf"%>
 
-<%@ page import="controller.MoneyServlet" %>
+<%@ page import="controller.MoneyServlet"%>
 
 <%
-	String error = (String) request.getAttribute("error");
-	Integer totalIncome = (Integer) request.getAttribute("totalIncome");
-	Integer totalExpense = (Integer) request.getAttribute("totalExpense");
+String error = (String) request.getAttribute("error");
+Integer totalIncome = (Integer) request.getAttribute("totalIncome");
+Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 %>
 
 <div class="outer">
 	<div class="chart">
-		<div class="chart_topbar">			
+		<div class="chart_topbar">
 			<div class="chart_topbar_right" id="chart_topbar_right">
 				<div class="date date_left">
-					From:&nbsp&nbsp<input type="text" id="datepicker"
-						name="datepicker" autocomplete="off">
+					From:&nbsp&nbsp<input type="text" id="datepicker" name="datepicker"
+						autocomplete="off">
 				</div>
 				<div class="date date_right">
-					To:&nbsp&nbsp<input type="text" id="datepicker2"
-						name="datepicker2" autocomplete="off">
+					To:&nbsp&nbsp<input type="text" id="datepicker2" name="datepicker2"
+						autocomplete="off">
 				</div>
 			</div>
 			<div class="chart_topbar_right2" id="chart_topbar_right2">
@@ -36,7 +36,7 @@
 				<button class="month" onclick="dateSet(3); highlight(this)">3</button>
 				<button class="month" onclick="dateSet(4); highlight(this)">4</button>
 				<button class="month" onclick="dateSet(5); highlight(this)">5</button>
-				<button class="month" onclick="dateSet(6); highlight(this)">6</button> 
+				<button class="month" onclick="dateSet(6); highlight(this)">6</button>
 				<button class="month" onclick="dateSet(7); highlight(this)">7</button>
 				<button class="month" onclick="dateSet(8); highlight(this)">8</button>
 				<button class="month" onclick="dateSet(9); highlight(this)">9</button>
@@ -46,24 +46,55 @@
 			</div>
 		</div>
 		<div class="chart_bottombar">
-			<div class="bottombar_left">
-				<span class="icon-coin-dollar icon_cash"></span>				
+			<div class="top_outer">
+				<div class="bottombar_left">
+					<span class="icon-coin-dollar icon_cash"></span>
+					<div class="word_cash">Cash</div>
+				</div>
+					<div class="cash_wrapper">
+						<h1 class="cash_income word">income&nbsp:</h1>
+						<h1 class="cash_income_show">XXX</h1>						
+						<h1 class="cash_expense word">expense&nbsp:</h1>						
+						<h1 class="cash_expense_show">XXX</h1>
+					</div>
 			</div>
-			<div class="bottombar_mid">
-				<span class="icon-bold icon_bank"></span>
+			<div class="mid_outer">
+				<div class="bottombar_mid">
+					<span class="icon-library icon_bank"></span>
+					<div class="word_Bank">Bank Account</div>
+				</div>
+					<div class="mid_wrapper">
+						<div>
+							<h1 class="mid_income word">income&nbsp:</h1>
+							<h1 class="mid_income_show">XXX</h1>
+						</div>
+						<div>					
+							<h1 class="mid_expense word">expense&nbsp:</h1>
+							<h1 class="mid_expense_show">XXX</h1>
+						</div>
+					</div>
 			</div>
-			<div class="bottombar_right">
-				<span class="icon-credit-card icon_card"></span>
+			<div class="bottom_outer">
+				<div class="bottombar_right">
+					<span class="icon-credit-card icon_card"></span>
+					<div class="word_card">Credit Card</div>
+				</div>
+					<div class="card_wrapper">
+						<h1 class="card_income word">income&nbsp:</h1>
+						<h1 class="card_income_show">XXX</h1>
+						<h1 class="card_expense word">expense&nbsp:</h1>
+						<h1 class="card_expense_show">XXX</h1>
+					</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <style>
-	@font-face {
-		font-family: BungeeInline;
-		src: url(/Calendar/calendar/fontfamily/BungeeInline.ttf)
-	}
+@font-face {
+	font-family: BungeeInline;
+	src: url(/Calendar/calendar/fontfamily/BungeeInline.ttf)
+}
 </style>
 
 <script>
