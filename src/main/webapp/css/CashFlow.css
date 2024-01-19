@@ -3,27 +3,17 @@
 .bottombar_mid,
 .bottombar_right{
 	width:28vw !important;
-	height: 60%;
+	height: 47%;
 	
 	position: relative;
-	top: 2vh;
+	top: 15vh;
+	left:9vw;
 	
 	display: flex;
 	align-items: center;
 	
 	margin-bottom: 2vh;
-}
-
-.bottombar_left{
-	left:-2%;
-}
-
-.bottombar_mid{
-	left:5%;
-}
-
-.bottombar_right{
-	right:-13%;
+	justify-content: left;
 }
 
 /* 文字 */
@@ -68,11 +58,11 @@
 }
 
 .mid_wrapper{
-	left: 7vw;
+	left: 18vw;
 }
 
 .card_wrapper{
-	left: 10vw;
+	left: 32vw;
 }
 
 .mid_outer,
@@ -83,21 +73,49 @@
 
 .word{
 	font-family: BungeeInline;
-	font-size: 35px;
+	font-size: 38px;
 }
 
 .show{
 	font-family: BungeeInline;
 	color: white;
+	font-size: 44px;
+	
+	display: flex;
+	justify-content: center;
+	
+	width:10vw;
 }
 
-.cash_income,
 .mid_income{
 	color: #23f566;
+}
+
+.mid_income,
+.card_expense{
+	position: relative;
+	top: 5vh;
 }
 
 .cash_expense,
 .mid_expense,
 .card_expense{
 	color: #fb2f2fe8;
+}
+
+.cash_income_show,
+.cash_expense_show{
+	position: relative;
+	top: 12vh;
+}
+
+.mid_income_show,
+.mid_expense_show{
+	position: relative;
+	top: 22vh;
+}
+
+.card_expense_show{
+	position: relative;
+	top: 31vh;
 }

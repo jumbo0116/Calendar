@@ -218,8 +218,8 @@
 				console.log("Data sent successfully:", data);
 				console.log("Data sent successfully:", data.totalIncome);
 				console.log("Data sent successfully:", data.totalExpense);
-				$('#totalIncome').text(data.totalIncome);
-				$('#totalExpense').text(data.totalExpense);
+				$('#totalIncome').text(parseFloat(data.totalIncome).toLocaleString());
+				$('#totalExpense').text(parseFloat(data.totalExpense).toLocaleString());
 			},
 			error : function(error) {
 				console.error("Error sending data:", error);

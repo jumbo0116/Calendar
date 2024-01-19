@@ -51,34 +51,32 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 					<span class="icon-coin-dollar icon_cash"></span>
 					<div class="word_cash">Cash</div>
 				</div>
-					<div class="cash_wrapper">
-						<h1 class="cash_income word">income&nbsp:</h1>
-						<h1 id="cashIncome" class="cash_income_show show">${cashIncome}</h1>						
-						<h1 class="cash_expense word">expense&nbsp:</h1>						
-						<h1 id="cashExpense" class="cash_expense_show show">${cashExpense}</h1>
-					</div>
-			</div>
-			<div class="mid_outer">
 				<div class="bottombar_mid">
 					<span class="icon-library icon_bank"></span>
 					<div class="word_Bank">Bank Account</div>
 				</div>
-					<div class="mid_wrapper">
-						<div>
-							<h1 class="mid_income word">income&nbsp:</h1>
-							<h1 id="bankIncome" class="mid_income_show show">${bankIncome}</h1>					
-							<h1 class="mid_expense word">expense&nbsp:</h1>
-							<h1 id="bankExpense" class="mid_expense_show show">${bankExpense}</h1>
-						</div>
-					</div>
-			</div>
-			<div class="bottom_outer">
 				<div class="bottombar_right">
 					<span class="icon-credit-card icon_card"></span>
 					<div class="word_card">Credit Card</div>
 				</div>
+					<div class="cash_wrapper"></div>
+			</div>
+			<div class="mid_outer">
+				
+					<div class="mid_wrapper">
+						<div>
+							<h1 class="mid_income word">income</h1>
+							<h1 id="cashIncome" class="cash_income_show show">${cashIncome}</h1>
+							<h1 id="bankIncome" class="mid_income_show show">${bankIncome}</h1>												
+						</div>
+					</div>
+			</div>
+			<div class="bottom_outer">
+				
 					<div class="card_wrapper">
-						<h1 class="card_expense word">expense&nbsp:</h1>
+						<h1 class="card_expense word">expense</h1>
+						<h1 id="cashExpense" class="cash_expense_show show">${cashExpense}</h1>
+						<h1 id="bankExpense" class="mid_expense_show show">${bankExpense}</h1>
 						<h1  id="cardExpense" class="card_expense_show show">${cardExpense}</h1>
 					</div>
 			</div>
@@ -204,11 +202,11 @@ Integer totalExpense = (Integer) request.getAttribute("totalExpense");
 				console.log("Data sent successfully:", data.bankExpense);
 				console.log("Data sent successfully:", data.cashIncome);
 				console.log("Data sent successfully:", data.bankIncome);
-				$('#cashExpense').text(data.cashExpense);
-				$('#cardExpense').text(data.cardExpense);
-				$('#bankExpense').text(data.bankExpense);
-				$('#cashIncome').text(data.cashIncome);
-				$('#bankIncome').text(data.bankIncome);
+				$('#cashExpense').text(parseFloat(data.cashExpense).toLocaleString());
+	            $('#cardExpense').text(parseFloat(data.cardExpense).toLocaleString());
+	            $('#bankExpense').text(parseFloat(data.bankExpense).toLocaleString());
+	            $('#cashIncome').text(parseFloat(data.cashIncome).toLocaleString());
+	            $('#bankIncome').text(parseFloat(data.bankIncome).toLocaleString());
 			},
 			error : function(error) {
 				console.error("Error sending data:", error);
