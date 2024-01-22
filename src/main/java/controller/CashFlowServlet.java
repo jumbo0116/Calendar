@@ -35,7 +35,7 @@ public class CashFlowServlet extends HttpServlet{
         int bankExpense = expense(targetYear, targetMonth,username,3);
         
         int cashIncome = income(targetYear, targetMonth,username,1);
-        int bankIncome = income(targetYear, targetMonth,username,2);
+        int bankIncome = income(targetYear, targetMonth,username,3);
         
         Map<String,Integer> result = new LinkedHashMap<>();
         result.put("cashExpense", cashExpense);
